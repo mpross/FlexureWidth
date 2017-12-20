@@ -24,7 +24,13 @@ left= np.array([cut[k] for k in xrange(len(cut))
 right= np.array([cut[k] for k in xrange(len(cut)) 
                        if cut[k,0]>0])
 
-print(np.mean(right[:,0])-np.mean(left[:,0]))
+if len(left)>len(right):
+    q=len(right)
+else:
+    q=len(left)
+
+print "Mean: ",np.mean(right[:,0])-np.mean(left[:,0])
+print "Min: ",min(right[:q,0]-left[:q,0])
 
 plt.plot(cut[:,0],cut[:,1],'ro')
 plt.axis([-0.1,0.1,-0.1,0.1])
