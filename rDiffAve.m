@@ -1,4 +1,7 @@
+%This terribly-named function accepts input of the form
 %in = [x1 y1 x2 y2]
+% (where the x* and y* are column vectors) and returns
+% the mean position of the point pairs and the distance between them.
 
 function o = rDiffAve( in )
 
