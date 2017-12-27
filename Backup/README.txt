@@ -1,0 +1,1 @@
+x,y,z data points from BRS flexure edge finding. z coordinate is meaningless and other two are used to find width of flexure. Bad naming convention is that the double numbers are one side while the singles are the other of the same flexure.

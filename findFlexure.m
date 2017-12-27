@@ -4,7 +4,8 @@ function out=findFlexure(filename)
 % to bottom not side to side.
 
 %%
-    %Import data
+    close all
+    %Import data	
     d = load(filename);
 
     %generate some random indices
@@ -23,8 +24,8 @@ function out=findFlexure(filename)
     center = [mean(smallDiff(:,1)), mean(smallDiff(:,2)), 0];
 
     %Pretty plot, if you want it.
-%     figure(1)
-%     plot( d(:,1), d(:,2),'.', smallDiff(:,1), smallDiff(:,2),'+', center(:,1), center(:,2) ,'*')
+    %figure(1)
+    %plot( d(:,1), d(:,2),'.', smallDiff(:,1), smallDiff(:,2),'+', center(:,1), center(:,2) ,'*')
 
     %center is now found.
 
