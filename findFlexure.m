@@ -1,8 +1,8 @@
 %Import data
-d = load('flexure1.dat');
+d = load('flexure3.dat');
 
 %generate some random indices
-r = ceil(rows(d) * rand(10000000,2)) ;
+r = ceil(length(d) * rand(10000000,2)) ;
 
 %drop difference pairs that are too close together in time
 r = r( abs(r(:,1) - r(:,2) ) > 1000 , :);
@@ -14,17 +14,18 @@ rda = rDiffAve( [ d( r(:,1) , 1:2 ) d(r(:,2), 1:2)]);
 smallDiff = rda( rda(:,3) < 0.05,:);
 
 %Find the center of mass of that distribution
-center = [mean(smallDiff(:,1)), mean(smallDiff(:,2))];
+center = [mean(smallDiff(:,1)), mean(smallDiff(:,2)), 0];
 
 %Pretty plot, if you want it.
-%plot( d(:,1), d(:,2),'.', smallDiff(:,1), smallDiff(:,2),'+1', center(:,1), center(:,2) ,'*')
+figure(1)
+plot( d(:,1), d(:,2),'.', smallDiff(:,1), smallDiff(:,2),'+', center(:,1), center(:,2) ,'*')
 
 %center is now found.
 
 %find all points within InnerPointDistance of the center
 InnerPointDistance = 0.5;
 InnerPointIndex = sqrt( (d(:,1)-center(1)).^2 + (d(:,2) - center(2)).^2 )  < InnerPointDistance;
-InnerPoints = d(InnerPointIndex,:);
+InnerPoints = d(InnerPointIndex,:)-repmat(center,length(d(InnerPointIndex,:)),1);
 
 %Scan vertically to find flexure center
 %Find differences too (premature optimization is the devil, but I did it anyway)
@@ -41,7 +42,7 @@ for y = -1:sliceSpacing:1
 	slice = InnerPoints( abs( InnerPoints(:,2) - y ) < sliceSpacing/2, :);
 
 	%if there are enough points to make std() (barely) reasonable
-	if( rows(slice) > 4 )
+	if( length(slice) > 4 )
 
 		%find the center
 		sliceCenter = mean(slice(:,1));
@@ -56,8 +57,8 @@ for y = -1:sliceSpacing:1
 		rightm = mean( rightPoints );
 
 		%Uncertainties on each mean, assuming normal distribution
-		lefterr  = std(leftPoints) /sqrt(rows(leftPoints ));
-		righterr = std(rightPoints)/sqrt(rows(rightPoints));
+		lefterr  = std(leftPoints) /sqrt(length(leftPoints ));
+		righterr = std(rightPoints)/sqrt(length(rightPoints));
 
 		%add errors in quadrature
 		diffErr = sqrt(lefterr^2 + righterr^2);
@@ -68,7 +69,9 @@ for y = -1:sliceSpacing:1
 end
 
 %pretty plot #1
-%plot( d(:,1), d(:,2),'.', smallDiff(:,1), smallDiff(:,2),'+1', sliceCenters(:,1), sliceCenters(:,2) ,'*')
+figure(2)
+plot( d(:,1), d(:,2),'.', smallDiff(:,1), smallDiff(:,2),'+', sliceCenters(:,1), sliceCenters(:,2) ,'*')
 
 %money plot.
+figure(3)
 errorbar(sliceCenters(:,2), sliceCenters(:,3), sliceCenters(:,4))
