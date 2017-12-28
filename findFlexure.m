@@ -76,8 +76,8 @@ function out=findFlexure(filename)
     end
 
     %pretty plot #1
-%     figure(2)
-%     plot( d(:,1), d(:,2),'.', smallDiff(:,1), smallDiff(:,2),'+', sliceCenters(:,1), sliceCenters(:,2) ,'*')
+   %  figure(2)
+  %   plot( d(:,1), d(:,2),'.', smallDiff(:,1), smallDiff(:,2),'+', sliceCenters(:,1), sliceCenters(:,2) ,'*')
 
     %money plot.
 %     figure(3)

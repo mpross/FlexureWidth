@@ -19,3 +19,6 @@ findFlexure('flexure66.dat')
 '7:'
 findFlexure('flexure7.dat')
 findFlexure('flexure77.dat')
+'8:'
+findFlexure('flexure8.dat')
+findFlexure('flexure88.dat')
